@@ -1,0 +1,204 @@
+* Your Chapter Title
+:PROPERTIES:
+:CUSTOM_ID: cp1
+:END:
+
+This is a sample chapter. For the sake of labelling, I assume this is the first
+chapter of your thesis. As you can see I define the chapter using one ~*~. After
+writing the chapter name you need to define the chapter properties. Here where
+we define the chapter label as ~:CUSTOM_ID:~. The ~cp#~ is abbreviation for
+*Chapter*. In order to cross references the chapter [[#cp1]] using link definition
+in org mode. In order to reference the chapter you should use ~#~ follow by the
+label name inside link definition as it can be seen above.
+
+** Referencing
+:PROPERTIES:
+:CUSTOM_ID: cp1:s1
+:END:
+
+   Here we defined a new section for the Chapter [[#cp1]]. As it can be seen, we use
+   the abbreviation ~s~ for labelling the section follow by section number. For the
+   cross-referencing of sections, follow the same instruction for
+   cross-referencing of  chapters.
+
+   These are some sample references to GAMYGDALA citep:popescu2014gamygdala from
+   the ~references.bib~ file and state effects of cognition
+   citep:hudlicka2002time from the same file. In the latex template, these
+   references are in separate ~.bib~ files, while here we merge two files
+   together for convenience.
+
+** Figures
+:PROPERTIES:
+:CUSTOM_ID: cp1:s2
+:END:
+
+ This is a single image figure (Figure [[cp1:s2:fig1]]). You can label the figure
+ using ~#+name~. The latex related attributes for the figure should written using
+ ~+#attr_latex~. Finally caption for the figure should be written using
+ ~#+caption~. Figure [[cp1:s2:fig1]] depicts an example figure and its org-mode
+ definition.
+ 
+#+name: cp1:s2:fig1
+#+attr_latex: :width 0.6\textwidth :placement [!ht]
+#+caption: This is a single figure environment
+[[./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg]]
+   
+
+I haven't find any solution to display to images side by side using org-mode.
+But fortunately it is still possible to solve this problem using the pure ~latex~
+coding embedded to an ~org~ file. Here is the example
+
+You can also define multi-image figure using latex sub-figure definition.
+Figure[[cp1:s2:fig2]] depicts an example of multi-image figure.
+
+#+NAME: cp1:s2:fig2
+#+begin_export latex
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg}
+		\caption{Figure 1}
+		\label{fig_multienv_1}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg}
+		\caption{Figure 2}
+		\label{fig_multienv_2}
+	\end{subfigure}
+	
+	\caption{A Multi-Figure Environment}
+	\label{cp1:s2:fig2}
+\end{figure}
+#+end_export
+
+#+begin_src latex :exports code
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{Image URL}
+		\caption{Figure 1}
+		\label{fig_multienv_1}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{Image URL}
+		\caption{Figure 2}
+		\label{fig_multienv_2}
+	\end{subfigure}
+	
+	\caption{A Multi-Figure Environment}
+	\label{cp1:s2:fig2}
+\end{figure}
+#+end_src
+
+
+
+#+begin_export html
+<div  class="figure">
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg" width="80%"  alt="tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg">
+  </p>
+  <p><span class="figure-number">(a): </span>caption for figure a</p>
+</div>
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg" width="80%"  alt="tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg">
+  </p>
+  <p><span class="figure-number">(b):</span>Caption for figure b</p>
+</div>
+<div style="width:100%">
+<p><span class="figure-number">Figure 2</span> Caption for figure</p>
+</div>
+</div>
+#+END_EXPORT
+
+For the side by side  ~HTML~ version you can use the code bellow. It is
+worthful to state that, we assumed all of the images are going to be saved in
+~figure~ folder. The code generates what can be see above this paragraph.
+
+#+begin_src html
+<div  class="figure">
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/[image_url]" width="80%"  alt="[image_alt text]">
+  </p>
+  <p><span class="figure-number">(a): </span>caption for figure a</p>
+</div>
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/[image_url]" width="80%"  alt="[image_alt text]">
+  </p>
+  <p><span class="figure-number">(b):</span>Caption for figure b</p>
+</div>
+<div style="width:100%">
+<p><span class="figure-number">Figure #</span> Caption for figure</p>
+</div>
+</div>
+#+end_src
+
+** Tables
+:PROPERTIES:
+:CUSTOM_ID: cp1:s3
+:END:
+
+Here is a sample table coded using table builder of the ~org-mode~. You can use
+~ATTR_LATEX~ to set the different attributes of the table (Table [[cp1:s2:tbl1]]):
+
+#+ATTR_LATEX: :mode table :environment tabular :placement [!ht] :width \textwidth
+#+ATTR_LATEX: :align m{0.2\textwidth}  m {0.1\textwidth} m{0.15\textwidth} :booktabs t
+#+ATTR_HTML: :border 2 :rules all :frame border :class some-style-class some-style-sub-class
+#+name: cp1:s2:tbl1
+#+caption[Sample Table]: This is table's long caption A table sample 
+|---+-----------------------+---|
+| A | $\longleftrightarrow$ | B |
+| C | $\longleftrightarrow$ | D |
+|---+-----------------------+---|
+
+You can also directly embed the ~latex~ code inside the ~org~ file. Here is the
+example of typing latex table inside the the org file. The code bellow will
+generate the table depicts above.
+
+#+begin_src org :exports code
+#+name: cp1:s2:tbl1
+#+attr_latex: :width \textwidth :placement [!ht]
+#+caption: A table sample
+\begin{table}
+	\centering
+	\begin{tabular}{ m{0.2\textwidth} m {0.1\textwidth} m{0.15\textwidth} }
+		\toprule
+		A & $\longleftrightarrow$ & B \\
+		C & $\longleftrightarrow$ & D \\
+		\bottomrule	
+	\end{tabular}	
+\end{table}
+#+end_src
+
+You can use ~latex~ base table definition for this purpose as it depicted above.
+
+*** Long Tables
+:PROPERTIES:
+:CUSTOM_ID: cp1:s3:ss1
+:END:
+
+
+A sample long table is shown in [[file:appendixB.org::*Long Tables][Appendix B]]  where we described the application of
+long table.
+
+** Equations
+:PROPERTIES:
+:CUSTOM_ID: cp1:s4
+:END:
+
+Here is a sample equation (Equation [[cp1:s4:eq1]]):
+
+#+name: cp1:s4:eq1
+\begin{equation}
+	y = mx + b
+\end{equation}
+

@@ -1,0 +1,118 @@
+* Long Tables
+:PROPERTIES:
+:CUSTOM_ID: appendix_b
+:END:
+
+This appendix demonstrates the use of a long table that spans multiple pages.
+
+#+ATTR_LATEX: :mode table :environment longtable :placement [!ht] :width \textwidth
+#+ATTR_LATEX: :align P{3cm}P{3cm}P{2.5cm}P{3.5cm} :booktabs t
+|---------+---------+---------+---------|
+|---------+---------+---------+---------|
+| *Col A* | *Col B* | *Col C* | *Col D* |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+
+As it stated before, you can generate the same long table by embedding the
+~latex~ code inside ~org~ file. Here is the example of what the final results
+will be.
+
+#+begin_src latex :exports code
+\begin{center}
+\begin{longtable}{P{3cm}P{3cm}P{2.5cm}P{3.5cm}}
+\toprule
+\hline
+\textbf{Col A} & \textbf{Col B} & \textbf{Col C} & \textbf{Col D} \\ \midrule
+
+\endfirsthead
+\multicolumn{4}{c}{\textit{Continued from previous page}} \\ \hline
+\textbf{Col A} & \textbf{Col B} & \textbf{Col C} & \textbf{Col D} \\ \hline
+\endhead
+\hline \multicolumn{4}{r}{\textit{Continued on the next page}} \\
+\endfoot
+\hline
+\endlastfoot
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+\hline
+\end{longtable}
+\end{center} 
+#+end_src

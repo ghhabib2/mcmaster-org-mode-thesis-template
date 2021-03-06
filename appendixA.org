@@ -1,0 +1,6 @@
+* Your Appendix
+:PROPERTIES:
+:CUSTOM_ID: appendix_a
+:END:
+
+Your appendix goes here.

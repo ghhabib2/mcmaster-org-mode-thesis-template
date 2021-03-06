@@ -1,0 +1,6 @@
+* Conclusion
+:PROPERTIES:
+:CUSTOM_ID: conclusion
+:END:
+
+Every thesis also needs a concluding chapter

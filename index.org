@@ -1,0 +1,133 @@
+# This is a -*- org -*- file
+
+#+TITLE: My Ph.D. Thesis Title
+#+LATEX_CLASS: mcmasterreport
+#+AUTHOR: Habib Ghaffari Hadigheh
+#+EMAIL: (concat "ghaffh1" at-sign "mcmaster.ca")
+#+DESCRIPTION: Documentation of my Ph.D. Thesis
+#+KEYWORDS: 
+#+LANGUAGE: en
+# Options when you want to generate PDF version. you sould comment the Options
+# for HTML generation.
+##+OPTIONS:  tex:t toc:nil title:nil
+# Options when you want to generate HTML version. You should comment the Options
+# for PDF generation.
+#+OPTIONS:  tex:t toc:t title:t
+
+# McMaster Thesis Latex Options
+#+LATEX_HEADER: \usepackage{gscale_thesis_doublespace}
+#+LATEX_HEADER: \usepackage{fancyheadings}
+#+LATEX_HEADER: \usepackage{natbib}                               
+#+LATEX_HEADER: \usepackage{setspace}
+# Your Title Page
+#+LATEX_HEADER: \include{definitions}         
+#+LATEX_HEADER: \setcounter{tocdepth}{1}
+ 
+# Allows the inclusion of figures
+#+LATEX_HEADER: \usepackage{graphicx}
+# Allows captions to be added to subfigures
+#+LATEX_HEADER: \usepackage{subcaption}
+# Centres caption text
+#+LATEX_HEADER: \usepackage[justification=centering]{caption}
+# Linking to LaTeX labels and external URLs
+#+LATEX_HEADER: \usepackage[hidelinks]{hyperref}
+# Used for table formatting
+#+LATEX_HEADER: \usepackage{array}
+#+LATEX_HEADER: \newcolumntype{P}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+# Fancy-style tables
+#+LATEX_HEADER: \usepackage{booktabs}
+# Allows for tables that are more than one page long
+#+LATEX_HEADER: \usepackage{longtable}
+# Better figure placement control
+#+LATEX_HEADER: \usepackage{float}
+#+LATEX_HEADER: \usepackage{enumerate}
+# Numbered lists 
+#+LATEX_HEADER: \usepackage[shortlabels]{enumitem}
+# Allows manual hyphenation of hypenated word
+#+Latex_HEADER: \usepackage[shortcuts]{extdash}
+# Non-standard math symbols
+#+LATEX_HEADER: \usepackage{amsmath}
+# Extended fonts for 
+#+LATEX_HEADER: \usepackage{amsfonts}
+# Mathematics
+# ===========
+#+LATEX_HEADER: \usepackage{xcolor}
+# Numbers equations based on their section
+#+LATEX_HEADER: \numberwithin{equation}{section}
+
+
+
+# Setup File
+#+SETUPFILE: ./org/theme-readtheorg-local.setup
+
+#+PROPERTY:  header-args :eval never-export
+
+# Title Page Decleration
+
+# Half title page, title page, declaration page
+#+begin_export latex
+\beforepreface                                         % Half title page, title page, declaration page   
+  \include{layabstr}                                  % Lay Abstract
+  \include{abstr}                                      % Abstract
+  \include{dedic}                                      % Dedication
+  \include{acknowledgements}                 % Acknowledgements
+  \referencepageswithnotations{notation} % Table of Contents, List of Figures, List of Tables, Notations
+  %\referencepages                                 % No notations version (choose one)
+\afterpreface
+
+
+#+end_export
+
+# Add introduction here
+#+include: "./introduction.org"
+# Latex command to reset the figure, equation and table counters.
+#+begin_export latex
+\setcounter{figure}{0}
+\setcounter{equation}{0}x3
+\setcounter{table}{0}i
+#+end_export
+
+# Add your chapters here.
+#+include: "./sample_chapter.org"
+#+begin_export latex
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\setcounter{table}{0}
+#+end_export
+
+# Conclusion chapter
+#+include: "./conclusion.org"
+#+begin_export latex
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\setcounter{table}{0}
+#+end_export
+
+# Appendixes
+#+BEGIN_EXPORT latex
+\begin{appendix}
+#+end_export
+#+include: "./appendixA.org"
+#+begin_export latex
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\setcounter{table}{0}
+#+end_export
+#+include: "./appendixB.org"
+#+begin_export latex
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\setcounter{table}{0}
+#+end_export
+#+BEGIN_EXPORT latex
+\end{appendix}
+#+end_export
+
+# Referencing
+# ===========================
+bibliographystyle:natbib
+bibliography:references.bib 
+
+#+BEGIN_EXPORT latex
+\label{NumDocumentPages}
+#+End_export
