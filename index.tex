@@ -1,10 +1,11 @@
-% Created 2021-03-06 Sat 01:52
+% Created 2021-07-22 Thu 20:20
 % Intended LaTeX compiler: pdflatex
 \documentclass[12pt]{report}
 
 \usepackage{gscale_thesis_doublespace}
 \usepackage{fancyheadings}
-\usepackage{natbib}
+\usepackage[natbib=true]{biblatex}
+\addbibresource{index.bib}
 \usepackage{setspace}
 \include{definitions}
 \setcounter{tocdepth}{1}
@@ -22,8 +23,8 @@
 \usepackage[shortcuts]{extdash}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{xcolor}
-\numberwithin{equation}{section}
 \author{Habib Ghaffari Hadigheh}
 \date{\today}
 \title{My Ph.D. Thesis Title}
@@ -36,10 +37,8 @@
  pdflang={English}}
 \begin{document}
 
-\maketitle
-\tableofcontents
 
-\#\#+OPTIONS:  tex:t toc:nil title:nil
+
 
 \beforepreface                                         % Half title page, title page, declaration page   
   \include{layabstr}                                  % Lay Abstract
@@ -50,7 +49,7 @@
   %\referencepages                                 % No notations version (choose one)
 \afterpreface
 \chapter{Introduction}
-\label{sec:orge371da8}
+\label{intro}
 Every thesis needs an introductory chapter
 
 \setcounter{figure}{0}
@@ -74,10 +73,11 @@ cross-referencing of sections, follow the same instruction for
 cross-referencing of  chapters.
 
 These are some sample references to GAMYGDALA \citep{popescu2014gamygdala} from
-the \texttt{references.bib} file and state effects of cognition
+the \texttt{index.bib} file and state effects of cognition
 \citep{hudlicka2002time} from the same file. In the latex template, these
 references are in separate \texttt{.bib} files, while here we merge two files
-together for convenience.
+together for convenience. However, references should be defined at the end of
+this document using the instruction.
 
 \section{Figures}
 \label{cp1:s2}
@@ -143,7 +143,31 @@ Figure\ref{cp1:s2:fig2} depicts an example of multi-image figure.
 \end{figure}
 \end{verbatim}
 
-For the side by side figure in \texttt{HTML} you can use the code bellow
+
+
+For the side by side  \texttt{HTML} version you can use the code bellow. It is
+worthful to state that, we assumed all of the images are going to be saved in
+\texttt{figure} folder. The code generates what can be see above this paragraph.
+
+\begin{verbatim}
+<div  class="figure">
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/[image_url]" width="80%"  alt="[image_alt text]">
+  </p>
+  <p><span class="figure-number">(a): </span>caption for figure a</p>
+</div>
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/[image_url]" width="80%"  alt="[image_alt text]">
+  </p>
+  <p><span class="figure-number">(b):</span>Caption for figure b</p>
+</div>
+<div style="width:100%">
+<p><span class="figure-number">Figure #</span> Caption for figure</p>
+</div>
+</div>
+\end{verbatim}
 
 \section{Tables}
 \label{cp1:s3}
@@ -195,12 +219,15 @@ Here is a sample equation (Equation \ref{cp1:s4:eq1}):
 \label{cp1:s4:eq1}
 	y = mx + b
 \end{equation}
+
+
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
 \chapter{Conclusion}
 \label{conclusion}
 Every thesis also needs a concluding chapter
+
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
@@ -209,6 +236,7 @@ Every thesis also needs a concluding chapter
 \chapter{Your Appendix}
 \label{appendix_a}
 Your appendix goes here.
+
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
@@ -288,7 +316,7 @@ will be.
 \endfirsthead
 \multicolumn{4}{c}{\textit{Continued from previous page}} \\ \hline
 \textbf{Col A} & \textbf{Col B} & \textbf{Col C} & \textbf{Col D} \\ \hline
-\endhead
+\end head
 \hline \multicolumn{4}{r}{\textit{Continued on the next page}} \\
 \endfoot
 \hline
@@ -338,13 +366,14 @@ A & B & C & D \\ \midrule
 \end{longtable}
 \end{center} 
 \end{verbatim}
+
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
 \end{appendix}
 
-\bibliographystyle{natbib}
-\bibliography{references} 
-
 \label{NumDocumentPages}
+
+\addcontentsline{toc}{part}{Biblioraphy}
+\printbibliography
 \end{document}
