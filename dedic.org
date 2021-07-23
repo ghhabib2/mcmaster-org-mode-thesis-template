@@ -1,5 +1,0 @@
-\null\vfill
-\begin{center}
-\textsl{Your Dedication \\ Optional second line}
-\end{center}
-\vfill

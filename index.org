@@ -1,5 +1,4 @@
 # This is a -*- org -*- file
-
 #+TITLE: My Ph.D. Thesis Title
 #+LATEX_CLASS: mcmasterreport
 #+AUTHOR: Habib Ghaffari Hadigheh
@@ -7,18 +6,49 @@
 #+DESCRIPTION: Documentation of my Ph.D. Thesis
 #+KEYWORDS: 
 #+LANGUAGE: en
+
+* ~mcmasterreport~ LaTeX Class                                     :noexport:
+
+A custom version of the reports class that matches to the McMaster University's
+LaTeX style. You need to run this lips command before starting to compile the
+output into LaTeX version.
+#+NAME: make-reports-class
+#+BEGIN_SRC emacs-lisp :results none
+ ;; Add the McMaster University latex custom template to the list
+  (add-to-list 'org-latex-classes
+               '("mcmasterreport"
+                 "\\documentclass[12pt]{report}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+  ;; Remove the default packages  from org-mode latex default
+  (setq org-latex-default-packages-alist nil)
+  (setq org-latex-packages-alist nil)
+#+END_SRC
+
+* Output Setup :ignore:
 # Options when you want to generate PDF version. you sould comment the Options
 # for HTML generation.
-##+OPTIONS:  tex:t toc:nil title:nil
+#+OPTIONS:  tex:t toc:nil title:nil
 # Options when you want to generate HTML version. You should comment the Options
 # for PDF generation.
-#+OPTIONS:  tex:t toc:t title:t
+# #+OPTIONS: toc:t title:t
 
+* McMaster Latex Setup :ignore:
 # McMaster Thesis Latex Options
+# Single Space Style
+# #+LATEX_HEADER: \usepackage{gscale_thesis_singlespace}
+# Double Space Style
 #+LATEX_HEADER: \usepackage{gscale_thesis_doublespace}
 #+LATEX_HEADER: \usepackage{fancyheadings}
-#+LATEX_HEADER: \usepackage{natbib}                               
+#+LATEX_HEADER: \usepackage[natbib=true]{biblatex}
+#+LATEX_HEADER: \addbibresource{index.bib}
 #+LATEX_HEADER: \usepackage{setspace}
+** Title Page Setup :ignore:
 # Your Title Page
 #+LATEX_HEADER: \include{definitions}         
 #+LATEX_HEADER: \setcounter{tocdepth}{1}
@@ -33,6 +63,7 @@
 #+LATEX_HEADER: \usepackage[hidelinks]{hyperref}
 # Used for table formatting
 #+LATEX_HEADER: \usepackage{array}
+
 #+LATEX_HEADER: \newcolumntype{P}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 # Fancy-style tables
 #+LATEX_HEADER: \usepackage{booktabs}
@@ -49,20 +80,13 @@
 #+LATEX_HEADER: \usepackage{amsmath}
 # Extended fonts for 
 #+LATEX_HEADER: \usepackage{amsfonts}
+#+LATEX_HEADER: \usepackage{amssymb}
 # Mathematics
 # ===========
 #+LATEX_HEADER: \usepackage{xcolor}
 # Numbers equations based on their section
-#+LATEX_HEADER: \numberwithin{equation}{section}
 
-
-
-# Setup File
-#+SETUPFILE: ./org/theme-readtheorg-local.setup
-
-#+PROPERTY:  header-args :eval never-export
-
-# Title Page Decleration
+* Preface Setup :ignore:
 
 # Half title page, title page, declaration page
 #+begin_export latex
@@ -79,7 +103,11 @@
 #+end_export
 
 # Add introduction here
-#+include: "./introduction.org"
+* Introduction
+:PROPERTIES:
+:CUSTOM_ID: intro
+:END:
+Every thesis needs an introductory chapter
 # Latex command to reset the figure, equation and table counters.
 #+begin_export latex
 \setcounter{figure}{0}
@@ -88,7 +116,212 @@
 #+end_export
 
 # Add your chapters here.
-#+include: "./sample_chapter.org"
+* Your Chapter Title
+:PROPERTIES:
+:CUSTOM_ID: cp1
+:END:
+
+This is a sample chapter. For the sake of labelling, I assume this is the first
+chapter of your thesis. As you can see I define the chapter using one ~*~. After
+writing the chapter name you need to define the chapter properties. Here where
+we define the chapter label as ~:CUSTOM_ID:~. The ~cp#~ is abbreviation for
+*Chapter*. In order to cross references the chapter [[#cp1]] using link definition
+in org mode. In order to reference the chapter you should use ~#~ follow by the
+label name inside link definition as it can be seen above.
+
+** Referencing
+:PROPERTIES:
+:CUSTOM_ID: cp1:s1
+:END:
+
+   Here we defined a new section for the Chapter [[#cp1]]. As it can be seen, we use
+   the abbreviation ~s~ for labelling the section follow by section number. For the
+   cross-referencing of sections, follow the same instruction for
+   cross-referencing of  chapters.
+
+   These are some sample references to GAMYGDALA citep:popescu2014gamygdala from
+   the ~index.bib~ file and state effects of cognition
+   citep:hudlicka2002time from the same file. In the latex template, these
+   references are in separate ~.bib~ files, while here we merge two files
+   together for convenience. However, references should be defined at the end of
+   this document using the instruction.
+
+** Figures
+:PROPERTIES:
+:CUSTOM_ID: cp1:s2
+:END:
+
+ This is a single image figure (Figure [[cp1:s2:fig1]]). You can label the figure
+ using ~#+name~. The latex related attributes for the figure should written using
+ ~+#attr_latex~. Finally caption for the figure should be written using
+ ~#+caption~. Figure [[cp1:s2:fig1]] depicts an example figure and its org-mode
+ definition.
+ 
+#+name: cp1:s2:fig1
+#+attr_latex: :width 0.6\textwidth :placement [!ht]
+#+caption: This is a single figure environment
+[[./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg]]
+   
+
+I haven't find any solution to display to images side by side using org-mode.
+But fortunately it is still possible to solve this problem using the pure ~latex~
+coding embedded to an ~org~ file. Here is the example
+
+You can also define multi-image figure using latex sub-figure definition.
+Figure[[cp1:s2:fig2]] depicts an example of multi-image figure.
+
+#+NAME: cp1:s2:fig2
+#+begin_export latex
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg}
+		\caption{Figure 1}
+		\label{fig_multienv_1}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg}
+		\caption{Figure 2}
+		\label{fig_multienv_2}
+	\end{subfigure}
+	
+	\caption{A Multi-Figure Environment}
+	\label{cp1:s2:fig2}
+\end{figure}
+#+end_export
+
+#+begin_src latex :exports code
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{Image URL}
+		\caption{Figure 1}
+		\label{fig_multienv_1}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{Image URL}
+		\caption{Figure 2}
+		\label{fig_multienv_2}
+	\end{subfigure}
+	
+	\caption{A Multi-Figure Environment}
+	\label{cp1:s2:fig2}
+\end{figure}
+#+end_src
+
+
+
+#+begin_export html
+<div  class="figure">
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg" width="80%"  alt="tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg">
+  </p>
+  <p><span class="figure-number">(a): </span>caption for figure a</p>
+</div>
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg" width="80%"  alt="tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg">
+  </p>
+  <p><span class="figure-number">(b):</span>Caption for figure b</p>
+</div>
+<div style="width:100%">
+<p><span class="figure-number">Figure 2</span> Caption for figure</p>
+</div>
+</div>
+#+END_EXPORT
+
+For the side by side  ~HTML~ version you can use the code bellow. It is
+worthful to state that, we assumed all of the images are going to be saved in
+~figure~ folder. The code generates what can be see above this paragraph.
+
+#+begin_src html
+<div  class="figure">
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/[image_url]" width="80%"  alt="[image_alt text]">
+  </p>
+  <p><span class="figure-number">(a): </span>caption for figure a</p>
+</div>
+<div style="width:50%; float:left">
+  <p>
+    <img src="./figures/[image_url]" width="80%"  alt="[image_alt text]">
+  </p>
+  <p><span class="figure-number">(b):</span>Caption for figure b</p>
+</div>
+<div style="width:100%">
+<p><span class="figure-number">Figure #</span> Caption for figure</p>
+</div>
+</div>
+#+end_src
+
+** Tables
+:PROPERTIES:
+:CUSTOM_ID: cp1:s3
+:END:
+
+Here is a sample table coded using table builder of the ~org-mode~. You can use
+~ATTR_LATEX~ to set the different attributes of the table (Table [[cp1:s2:tbl1]]):
+
+#+ATTR_LATEX: :mode table :environment tabular :placement [!ht] :width \textwidth
+#+ATTR_LATEX: :align m{0.2\textwidth}  m {0.1\textwidth} m{0.15\textwidth} :booktabs t
+#+ATTR_HTML: :border 2 :rules all :frame border :class some-style-class some-style-sub-class
+#+name: cp1:s2:tbl1
+#+caption[Sample Table]: This is table's long caption A table sample 
+|---+-----------------------+---|
+| A | $\longleftrightarrow$ | B |
+| C | $\longleftrightarrow$ | D |
+|---+-----------------------+---|
+
+You can also directly embed the ~latex~ code inside the ~org~ file. Here is the
+example of typing latex table inside the the org file. The code bellow will
+generate the table depicts above.
+
+#+begin_src org :exports code
+#+name: cp1:s2:tbl1
+#+attr_latex: :width \textwidth :placement [!ht]
+#+caption: A table sample
+\begin{table}
+	\centering
+	\begin{tabular}{ m{0.2\textwidth} m {0.1\textwidth} m{0.15\textwidth} }
+		\toprule
+		A & $\longleftrightarrow$ & B \\
+		C & $\longleftrightarrow$ & D \\
+		\bottomrule	
+	\end{tabular}	
+\end{table}
+#+end_src
+
+You can use ~latex~ base table definition for this purpose as it depicted above.
+
+*** Long Tables
+:PROPERTIES:
+:CUSTOM_ID: cp1:s3:ss1
+:END:
+
+
+A sample long table is shown in [[file:appendixB.org::*Long Tables][Appendix B]]  where we described the application of
+long table.
+
+** Equations
+:PROPERTIES:
+:CUSTOM_ID: cp1:s4
+:END:
+
+Here is a sample equation (Equation [[cp1:s4:eq1]]):
+
+#+name: cp1:s4:eq1
+\begin{equation}
+	y = mx + b
+\end{equation}
+
+
 #+begin_export latex
 \setcounter{figure}{0}
 \setcounter{equation}{0}
@@ -96,7 +329,13 @@
 #+end_export
 
 # Conclusion chapter
-#+include: "./conclusion.org"
+* Conclusion
+:PROPERTIES:
+:CUSTOM_ID: conclusion
+:END:
+
+Every thesis also needs a concluding chapter
+
 #+begin_export latex
 \setcounter{figure}{0}
 \setcounter{equation}{0}
@@ -107,13 +346,137 @@
 #+BEGIN_EXPORT latex
 \begin{appendix}
 #+end_export
-#+include: "./appendixA.org"
+* Your Appendix
+:PROPERTIES:
+:CUSTOM_ID: appendix_a
+:END:
+
+Your appendix goes here.
+
 #+begin_export latex
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
 #+end_export
-#+include: "./appendixB.org"
+* Long Tables
+:PROPERTIES:
+:CUSTOM_ID: appendix_b
+:END:
+
+This appendix demonstrates the use of a long table that spans multiple pages.
+
+#+ATTR_LATEX: :mode table :environment longtable :placement [!ht] :width \textwidth
+#+ATTR_LATEX: :align P{3cm}P{3cm}P{2.5cm}P{3.5cm} :booktabs t
+|---------+---------+---------+---------|
+|---------+---------+---------+---------|
+| *Col A* | *Col B* | *Col C* | *Col D* |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+| A       | B       | C       | D       |
+|---------+---------+---------+---------|
+
+As it stated before, you can generate the same long table by embedding the
+~latex~ code inside ~org~ file. Here is the example of what the final results
+will be.
+
+#+begin_src latex :exports code
+\begin{center}
+\begin{longtable}{P{3cm}P{3cm}P{2.5cm}P{3.5cm}}
+\toprule
+\hline
+\textbf{Col A} & \textbf{Col B} & \textbf{Col C} & \textbf{Col D} \\ \midrule
+
+\endfirsthead
+\multicolumn{4}{c}{\textit{Continued from previous page}} \\ \hline
+\textbf{Col A} & \textbf{Col B} & \textbf{Col C} & \textbf{Col D} \\ \hline
+\end head
+\hline \multicolumn{4}{r}{\textit{Continued on the next page}} \\
+\endfoot
+\hline
+\endlastfoot
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+A & B & C & D \\ \midrule
+
+\hline
+\end{longtable}
+\end{center} 
+#+end_src
+
 #+begin_export latex
 \setcounter{figure}{0}
 \setcounter{equation}{0}
@@ -123,11 +486,42 @@
 \end{appendix}
 #+end_export
 
+#+begin_export latex
+\label{NumDocumentPages}
+#+end_export
+
 # Referencing
 # ===========================
-bibliographystyle:natbib
-bibliography:references.bib 
 
-#+BEGIN_EXPORT latex
-\label{NumDocumentPages}
-#+End_export
+* Bib :ignore:
+# LaTeX: \addcontentsline{toc}{section}{References}
+#+LaTeX: \addcontentsline{toc}{part}{Biblioraphy}
+#+LaTeX: \printbibliography
+* Org-Bibtex :ignore:
+** COMMENT PUT BIBTEX ENTRIES HERE IN SUBSECTION ENDED WITH IGNORE USING ORG-BIBTEX-YANK COMMAND :ignore:
+** COMMENT EXPORT TO index.bib USING ORG-BIBTEX COMMAND              :ignore:
+*** We highly recommend to use ~index.bib~ name when you are exporting :ignore:
+** GAMYGDALA: An emotion engine for games                            :ignore:
+   :PROPERTIES:
+   :TITLE:    {GAMYGDALA}: An emotion engine for games
+   :BTYPE:    article
+   :CUSTOM_ID: popescu2014gamygdala
+   :AUTHOR:   Popescu, Adrian and Broekens, Joost and van Someren, Maarten
+   :VOLUME: 5
+   :PAGES: 32--44
+   :YEAR:     2014
+   :PUBLISHER: IEEE
+   :END:
+** This time with feeling: Integrated model of trait and state effects on cognition and behavior :ignore:
+   :PROPERTIES:
+   :TITLE:    This time with feeling: Integrated model of trait and state effects on cognition and behavior
+   :BTYPE:    article
+   :AUTHOR:   Hudlicka, Eva
+   :CUSTOM_ID: hudlicka2002time
+   :PAGES:    611--641
+   :VOLUME:   16
+   :NUMBER:   7-8
+   :YEAR:     2019
+   :PUBLISHER: Taylor and Francis
+   :JOURNAL:  Applied Artifical Intelligence
+   :END:
