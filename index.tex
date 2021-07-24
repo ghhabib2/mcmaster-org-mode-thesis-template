@@ -1,11 +1,10 @@
-% Created 2021-07-22 Thu 20:20
+% Created 2021-07-23 Fri 20:17
 % Intended LaTeX compiler: pdflatex
 \documentclass[12pt]{report}
 
 \usepackage{gscale_thesis_doublespace}
 \usepackage{fancyheadings}
-\usepackage[natbib=true]{biblatex}
-\addbibresource{index.bib}
+\usepackage{natbib}
 \usepackage{setspace}
 \include{definitions}
 \setcounter{tocdepth}{1}
@@ -48,6 +47,8 @@
   \referencepageswithnotations{notation} % Table of Contents, List of Figures, List of Tables, Notations
   %\referencepages                                 % No notations version (choose one)
 \afterpreface
+
+
 \chapter{Introduction}
 \label{intro}
 Every thesis needs an introductory chapter
@@ -120,7 +121,6 @@ Figure\ref{cp1:s2:fig2} depicts an example of multi-image figure.
 	\caption{A Multi-Figure Environment}
 	\label{cp1:s2:fig2}
 \end{figure}
-
 \begin{verbatim}
 \begin{figure}[ht]
   \centering
@@ -142,9 +142,6 @@ Figure\ref{cp1:s2:fig2} depicts an example of multi-image figure.
   \label{cp1:s2:fig2}
 \end{figure}
 \end{verbatim}
-
-
-
 For the side by side  \texttt{HTML} version you can use the code bellow. It is
 worthful to state that, we assumed all of the images are going to be saved in
 \texttt{figure} folder. The code generates what can be see above this paragraph.
@@ -372,8 +369,8 @@ A & B & C & D \\ \midrule
 \setcounter{table}{0}
 \end{appendix}
 
-\label{NumDocumentPages}
+\bibliographystyle{natbib}
+\bibliography{index}
 
-\addcontentsline{toc}{part}{Biblioraphy}
-\printbibliography
+\label{NumDocumentPages}
 \end{document}
