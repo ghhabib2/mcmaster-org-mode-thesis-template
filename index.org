@@ -7,6 +7,8 @@
 #+KEYWORDS: 
 #+LANGUAGE: en
 
+* TODO ~org-ref~ related changes haven't applied completely :ignore:
+
 * ~mcmasterreport~ LaTeX Class                                     :noexport:
 
 A custom version of the reports class that matches to the McMaster University's
@@ -45,8 +47,7 @@ output into LaTeX version.
 # Double Space Style
 #+LATEX_HEADER: \usepackage{gscale_thesis_doublespace}
 #+LATEX_HEADER: \usepackage{fancyheadings}
-#+LATEX_HEADER: \usepackage[natbib=true]{biblatex}
-#+LATEX_HEADER: \addbibresource{index.bib}
+#+LATEX_HEADER: \usepackage{natbib}
 #+LATEX_HEADER: \usepackage{setspace}
 ** Title Page Setup :ignore:
 # Your Title Page
@@ -86,8 +87,8 @@ output into LaTeX version.
 #+LATEX_HEADER: \usepackage{xcolor}
 # Numbers equations based on their section
 
-* Preface Setup :ignore:
-
+* Preface Setup                                                      :ignore:
+** TODO Still using latex for preface. Needed to be replaced with org mode. :ignore:
 # Half title page, title page, declaration page
 #+begin_export latex
 \beforepreface                                         % Half title page, title page, declaration page   
@@ -103,6 +104,8 @@ output into LaTeX version.
 #+end_export
 
 # Add introduction here
+
+
 * Introduction
 :PROPERTIES:
 :CUSTOM_ID: intro
@@ -193,6 +196,8 @@ Figure[[cp1:s2:fig2]] depicts an example of multi-image figure.
 \end{figure}
 #+end_export
 
+*** TODO Still using latex for sub figures. Needed to be replaced :ignore:
+
 #+begin_src latex :exports code
 \begin{figure}[ht]
 	\centering
@@ -215,7 +220,7 @@ Figure[[cp1:s2:fig2]] depicts an example of multi-image figure.
 \end{figure}
 #+end_src
 
-
+*** TODO Still using html for sub figures. Needed to be replaced :ignore:
 
 #+begin_export html
 <div  class="figure">
@@ -486,21 +491,24 @@ A & B & C & D \\ \midrule
 \end{appendix}
 #+end_export
 
-#+begin_export latex
+# Referencing
+# ===========================
+bibliographystyle:natbib
+bibliography:index.bib
+
+#+BEGIN_EXPORT latex
 \label{NumDocumentPages}
 #+end_export
 
-# Referencing
-# ===========================
-
 * Bib :ignore:
 # LaTeX: \addcontentsline{toc}{section}{References}
-#+LaTeX: \addcontentsline{toc}{part}{Biblioraphy}
-#+LaTeX: \printbibliography
-* Org-Bibtex :ignore:
+# #+LaTeX: \addcontentsline{toc}{part}{Biblioraphy}
+# #+LaTeX: \printbibliography
+* ~References~ Org-Bibtex                                            :ignore:
 ** COMMENT PUT BIBTEX ENTRIES HERE IN SUBSECTION ENDED WITH IGNORE USING ORG-BIBTEX-YANK COMMAND :ignore:
 ** COMMENT EXPORT TO index.bib USING ORG-BIBTEX COMMAND              :ignore:
 *** We highly recommend to use ~index.bib~ name when you are exporting :ignore:
+** TODO adding different kinds of citation :ignore:
 ** GAMYGDALA: An emotion engine for games                            :ignore:
    :PROPERTIES:
    :TITLE:    {GAMYGDALA}: An emotion engine for games
