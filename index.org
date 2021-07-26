@@ -47,7 +47,7 @@ output into LaTeX version.
 # Double Space Style
 #+LATEX_HEADER: \usepackage{gscale_thesis_doublespace}
 #+LATEX_HEADER: \usepackage{fancyheadings}
-#+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \usepackage[square,numbers]{natbib}
 #+LATEX_HEADER: \usepackage{setspace}
 ** Title Page Setup :ignore:
 # Your Title Page
@@ -142,9 +142,9 @@ label name inside link definition as it can be seen above.
    cross-referencing of sections, follow the same instruction for
    cross-referencing of  chapters.
 
-   These are some sample references to GAMYGDALA citep:popescu2014gamygdala from
+   These are some sample references to GAMYGDALA cite:popescu2014gamygdala from
    the ~index.bib~ file and state effects of cognition
-   citep:hudlicka2002time from the same file. In the latex template, these
+   cite:hudlicka2002time from the same file. In the latex template, these
    references are in separate ~.bib~ files, while here we merge two files
    together for convenience. However, references should be defined at the end of
    this document using the instruction.
@@ -161,7 +161,7 @@ label name inside link definition as it can be seen above.
  definition.
  
 #+name: cp1:s2:fig1
-#+attr_latex: :width 0.6\textwidth :placement [!ht]
+#+attr_latex: :width 0.8\textwidth :placement [!ht]
 #+caption: This is a single figure environment
 [[./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg]]
    
