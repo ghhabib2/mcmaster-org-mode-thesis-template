@@ -1,13 +1,15 @@
-% Created 2021-07-25 Sun 23:26
+% Created 2022-03-29 Tue 01:45
 % Intended LaTeX compiler: pdflatex
 \documentclass[12pt]{report}
-
+\usepackage[mathletters]{ucs}
 \usepackage{gscale_thesis_doublespace}
 \usepackage{fancyheadings}
 \usepackage[square,numbers]{natbib}
+\usepackage[english]{babel}
 \usepackage{setspace}
 \include{definitions}
 \setcounter{tocdepth}{1}
+\usepackage{lscape}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage[justification=centering]{caption}
@@ -23,18 +25,55 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{makeidx}
+\makeindex
+\usepackage[xindy]{glossaries}
+\makeglossaries
 \usepackage{xcolor}
-\author{Habib Ghaffari Hadigheh}
+\numberwithin{equation}{section}
+\usepackage[mathletters]{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsthm}
+\newacronym{cpu}{CPU}{Central Processing Unit}
+\newglossaryentry{dsl}{name=DSL,description={{A domain-specific language (DSL) is a computer language specialized to a particular application domain}}}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{example}
+\newtheorem{example}{Example}
+\theoremstyle{axiom}
+\newtheorem{axiom}{Axiom}[chapter]
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{euscript}
+\newcommand*\euler[1]{\ensuremath{\EuScript{#1}}}
+\def \M{\euler M}
+\def \L{\euler L}
+\def \N{\euler N}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\Real}{\mathbb R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\BX}{\mathbf{B}(X)}
+\newcommand{\A}{\mathcal{A}}
+\author{Frist Name and Last Name}
 \date{\today}
 \title{My Ph.D. Thesis Title}
 \hypersetup{
- pdfauthor={Habib Ghaffari Hadigheh},
+ pdfauthor={Frist Name and Last Name},
  pdftitle={My Ph.D. Thesis Title},
  pdfkeywords={},
  pdfsubject={Documentation of my Ph.D. Thesis},
- pdfcreator={Emacs 27.1 (Org mode 9.4.4)}, 
+ pdfcreator={Emacs 27.2 (Org mode 9.5.1)}, 
  pdflang={English}}
 \begin{document}
+
 
 
 
@@ -44,8 +83,7 @@
   \include{abstr}                                      % Abstract
   \include{dedic}                                      % Dedication
   \include{acknowledgements}                 % Acknowledgements
-  \referencepageswithnotations{notation} % Table of Contents, List of Figures, List of Tables, Notations
-  %\referencepages                                 % No notations version (choose one)
+  \referencepages                                 % Table of Contents, List of Figures, List of Tables,
 \afterpreface
 
 
@@ -54,17 +92,17 @@
 Every thesis needs an introductory chapter
 
 \setcounter{figure}{0}
-\setcounter{equation}{0}x3
-\setcounter{table}{0}i
+\setcounter{equation}{0}
+\setcounter{table}{0}
+
 \chapter{Your Chapter Title}
 \label{cp1}
 This is a sample chapter. For the sake of labelling, I assume this is the first
 chapter of your thesis. As you can see I define the chapter using one \texttt{*}. After
 writing the chapter name you need to define the chapter properties. Here where
-we define the chapter label as \texttt{:CUSTOM\_ID:}. The \texttt{cp\#} is abbreviation for
+we define the chapter label as \texttt{:CUSTOM\_ID:}. The \texttt{ref:cp\#} is abbreviation for
 \textbf{Chapter}. In order to cross references the chapter \ref{cp1} using link definition
-in org mode. In order to reference the chapter you should use \texttt{\#} follow by the
-label name inside link definition as it can be seen above.
+in org mode.
 
 \section{Referencing}
 \label{cp1:s1}
@@ -90,7 +128,7 @@ definition.
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.6\textwidth]{./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg}
+\includegraphics[width=0.8\textwidth]{./figures/Sample/tumblr_static_eaceks0rfxsss8o4swscw40wo.jpg}
 \caption{\label{cp1:s2:fig1}This is a single figure environment}
 \end{figure}
 
@@ -100,7 +138,7 @@ But fortunately it is still possible to solve this problem using the pure \textt
 coding embedded to an \texttt{org} file. Here is the example
 
 You can also define multi-image figure using latex sub-figure definition.
-Figure\ref{cp1:s2:fig2} depicts an example of multi-image figure.
+Figure \ref{cp1:s2:fig2} depicts an example of multi-image figure.
 
 \begin{figure}[ht]
 	\centering
@@ -203,10 +241,12 @@ generate the table depicts above.
 
 You can use \texttt{latex} base table definition for this purpose as it depicted above.
 
+
 \subsection{Long Tables}
 \label{cp1:s3:ss1}
-A sample long table is shown in \href{appendixB.org}{Appendix B}  where we described the application of
+A sample long table is shown in \ref{appendix_b}  where we described the application of
 long table.
+
 
 \section{Equations}
 \label{cp1:s4}
@@ -221,15 +261,33 @@ Here is a sample equation (Equation \ref{cp1:s4:eq1}):
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
+\section{Acronyms and Glossaries}
+\label{cp1:s5}
+An abbreviation is a short form of a word or phrase that is usually made by
+deleting certain letters. In the following sentence, everything underlined is an
+abbreviation.
+
+Acronyms are usually formed using the first letter (or letters) of each word in
+a phrase. he first time you use the term, put the acronym in parentheses after
+the full term. Thereafter, you can stick to using the acronym. For example, if
+it is the first time you are introducing the \acrshort{cpu}, you need to use it as \Acrfull{cpu}. You can also have glossaries as more descriptive
+acronyms. As an example I've added \gls{dsl} as a glossary here which is going to
+introduce the Domain Specific Languages.
+
+
 \chapter{Conclusion}
 \label{conclusion}
 Every thesis also needs a concluding chapter
+
+
 
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
 
 \begin{appendix}
+
+
 \chapter{Your Appendix}
 \label{appendix_a}
 Your appendix goes here.
@@ -237,6 +295,7 @@ Your appendix goes here.
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
+
 \chapter{Long Tables}
 \label{appendix_b}
 This appendix demonstrates the use of a long table that spans multiple pages.
@@ -364,12 +423,16 @@ A & B & C & D \\ \midrule
 \end{center} 
 \end{verbatim}
 
+
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \setcounter{table}{0}
 \end{appendix}
 
-\bibliographystyle{natbib}
+
+\printglossaries
+
+\bibliographystyle{abbrvnat}
 \bibliography{index}
 
 \label{NumDocumentPages}

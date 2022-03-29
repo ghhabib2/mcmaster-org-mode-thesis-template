@@ -1,8 +1,7 @@
-# This is a -*- org -*- file
 #+TITLE: My Ph.D. Thesis Title
 #+LATEX_CLASS: mcmasterreport
-#+AUTHOR: Habib Ghaffari Hadigheh
-#+EMAIL: (concat "ghaffh1" at-sign "mcmaster.ca")
+#+AUTHOR: Frist Name and Last Name
+#+EMAIL: (concat "your_email" at-sign "mcmaster.ca")
 #+DESCRIPTION: Documentation of my Ph.D. Thesis
 #+KEYWORDS: 
 #+LANGUAGE: en
@@ -13,7 +12,8 @@
 
 A custom version of the reports class that matches to the McMaster University's
 LaTeX style. You need to run this lips command before starting to compile the
-output into LaTeX version.
+output into LaTeX version. Add this or any changes as local variables to your
+org file.
 #+NAME: make-reports-class
 #+BEGIN_SRC emacs-lisp :results none
  ;; Add the McMaster University latex custom template to the list
@@ -48,12 +48,13 @@ output into LaTeX version.
 #+LATEX_HEADER: \usepackage{gscale_thesis_doublespace}
 #+LATEX_HEADER: \usepackage{fancyheadings}
 #+LATEX_HEADER: \usepackage[square,numbers]{natbib}
+#+LATEX_HEADER: \usepackage[english]{babel}
 #+LATEX_HEADER: \usepackage{setspace}
-** Title Page Setup :ignore:
 # Your Title Page
 #+LATEX_HEADER: \include{definitions}         
 #+LATEX_HEADER: \setcounter{tocdepth}{1}
- 
+# Landscape
+#+LATEX_HEADER: \usepackage{lscape}
 # Allows the inclusion of figures
 #+LATEX_HEADER: \usepackage{graphicx}
 # Allows captions to be added to subfigures
@@ -82,10 +83,73 @@ output into LaTeX version.
 # Extended fonts for 
 #+LATEX_HEADER: \usepackage{amsfonts}
 #+LATEX_HEADER: \usepackage{amssymb}
+# Indexing Setup
+#+LATEX_HEADER: \usepackage{makeidx}
+#+LATEX_HEADER: \makeindex
+# Glossaries
+#+latex_header: \usepackage[xindy]{glossaries}
+#+latex_header: \makeglossaries
+# This will not show in your export. It must be named glossary
+
+#+name: glossary
+| label | name | description                                                                                            |
+|-------+------+--------------------------------------------------------------------------------------------------------|
+| dsl   | DSL  | A domain-specific language (DSL) is a computer language specialized to a particular application domain |
+
+
+#+name: acronyms
+| Key | Short | Long                    |
+|-----+-------+-------------------------|
+| cpu | CPU   | Central Processing Unit |
+
+
 # Mathematics
 # ===========
 #+LATEX_HEADER: \usepackage{xcolor}
 # Numbers equations based on their section
+#+LATEX_HEADER: \numberwithin{equation}{section}
+# Defining the theormes, definitions, etc
+# =======================================
+#+LATEX_HEADER: \usepackage[mathletters]{ucs}
+#+LATEX_HEADER: \usepackage[utf8x]{inputenc}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+latex_header_extra: \theoremstyle{definition}
+#+latex_header_extra: \newtheorem{definition}{Definition}[chapter]
+#+latex_header_extra: \theoremstyle{remark}
+#+latex_header_extra: \newtheorem*{remark}{Remark}
+#+latex_header_extra: \newtheorem{theorem}{Theorem}[chapter]
+#+latex_header_extra: \newtheorem{corollary}{Corollary}[theorem]
+#+latex_header_extra: \newtheorem{lemma}[theorem]{Lemma}
+#+latex_header_extra: \theoremstyle{example}
+#+latex_header_extra: \newtheorem{example}{Example}
+#+latex_header_extra: \theoremstyle{axiom}
+#+latex_header_extra: \newtheorem{axiom}{Axiom}[chapter]
+# Some definitions
+# ===========================
+#+latex_header_extra: \DeclareMathOperator*{\argmax}{arg\,max}
+#+latex_header_extra: \DeclareMathOperator*{\argmin}{arg\,min}
+#+latex_header_extra: \usepackage{euscript}
+#+latex_header_extra: \newcommand*\euler[1]{\ensuremath{\EuScript{#1}}}
+#+latex_header_extra: \def \M{\euler M}
+#+latex_header_extra: \def \L{\euler L}
+#+latex_header_extra: \def \N{\euler N}
+#  MATH
+# ===========
+#+latex_header_extra:\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+#+latex_header_extra:\newcommand{\abs}[1]{\left\vert#1\right\vert}
+#+latex_header_extra:\newcommand{\set}[1]{\left\{#1\right\}}
+#+latex_header_extra:\newcommand{\Real}{\mathbb R}
+#+latex_header_extra:\newcommand{\eps}{\varepsilon}
+#+latex_header_extra:\newcommand{\To}{\longrightarrow}
+#+latex_header_extra:\newcommand{\BX}{\mathbf{B}(X)}
+#+latex_header_extra:\newcommand{\A}{\mathcal{A}}
+# Property to accept unicode characters
+
+# Setup File
+#+SETUPFILE: ./org/theme-readtheorg-local.setup
+
+#+PROPERTY:  header-args :eval never-export
+
 
 * Preface Setup                                                      :ignore:
 ** TODO Still using latex for preface. Needed to be replaced with org mode. :ignore:
@@ -96,8 +160,7 @@ output into LaTeX version.
   \include{abstr}                                      % Abstract
   \include{dedic}                                      % Dedication
   \include{acknowledgements}                 % Acknowledgements
-  \referencepageswithnotations{notation} % Table of Contents, List of Figures, List of Tables, Notations
-  %\referencepages                                 % No notations version (choose one)
+  \referencepages                                 % Table of Contents, List of Figures, List of Tables,
 \afterpreface
 
 
@@ -114,11 +177,12 @@ Every thesis needs an introductory chapter
 # Latex command to reset the figure, equation and table counters.
 #+begin_export latex
 \setcounter{figure}{0}
-\setcounter{equation}{0}x3
-\setcounter{table}{0}i
+\setcounter{equation}{0}
+\setcounter{table}{0}
 #+end_export
 
 # Add your chapters here.
+
 * Your Chapter Title
 :PROPERTIES:
 :CUSTOM_ID: cp1
@@ -127,24 +191,23 @@ Every thesis needs an introductory chapter
 This is a sample chapter. For the sake of labelling, I assume this is the first
 chapter of your thesis. As you can see I define the chapter using one ~*~. After
 writing the chapter name you need to define the chapter properties. Here where
-we define the chapter label as ~:CUSTOM_ID:~. The ~cp#~ is abbreviation for
-*Chapter*. In order to cross references the chapter [[#cp1]] using link definition
-in org mode. In order to reference the chapter you should use ~#~ follow by the
-label name inside link definition as it can be seen above.
+we define the chapter label as ~:CUSTOM_ID:~. The ~ref:cp#~ is abbreviation for
+*Chapter*. In order to cross references the chapter ref:cp1 using link definition
+in org mode.
 
 ** Referencing
 :PROPERTIES:
 :CUSTOM_ID: cp1:s1
 :END:
 
-   Here we defined a new section for the Chapter [[#cp1]]. As it can be seen, we use
+   Here we defined a new section for the Chapter ref:cp1. As it can be seen, we use
    the abbreviation ~s~ for labelling the section follow by section number. For the
    cross-referencing of sections, follow the same instruction for
    cross-referencing of  chapters.
 
-   These are some sample references to GAMYGDALA cite:popescu2014gamygdala from
+   These are some sample references to GAMYGDALA [[cite:&popescu2014gamygdala]] from
    the ~index.bib~ file and state effects of cognition
-   cite:hudlicka2002time from the same file. In the latex template, these
+   [[cite:&hudlicka2002time]] from the same file. In the latex template, these
    references are in separate ~.bib~ files, while here we merge two files
    together for convenience. However, references should be defined at the end of
    this document using the instruction.
@@ -154,10 +217,10 @@ label name inside link definition as it can be seen above.
 :CUSTOM_ID: cp1:s2
 :END:
 
- This is a single image figure (Figure [[cp1:s2:fig1]]). You can label the figure
+ This is a single image figure (Figure ref:cp1:s2:fig1). You can label the figure
  using ~#+name~. The latex related attributes for the figure should written using
  ~+#attr_latex~. Finally caption for the figure should be written using
- ~#+caption~. Figure [[cp1:s2:fig1]] depicts an example figure and its org-mode
+ ~#+caption~. Figure ref:cp1:s2:fig1 depicts an example figure and its org-mode
  definition.
  
 #+name: cp1:s2:fig1
@@ -171,7 +234,7 @@ But fortunately it is still possible to solve this problem using the pure ~latex
 coding embedded to an ~org~ file. Here is the example
 
 You can also define multi-image figure using latex sub-figure definition.
-Figure[[cp1:s2:fig2]] depicts an example of multi-image figure.
+Figure ref:cp1:s2:fig2 depicts an example of multi-image figure.
 
 #+NAME: cp1:s2:fig2
 #+begin_export latex
@@ -272,7 +335,7 @@ worthful to state that, we assumed all of the images are going to be saved in
 :END:
 
 Here is a sample table coded using table builder of the ~org-mode~. You can use
-~ATTR_LATEX~ to set the different attributes of the table (Table [[cp1:s2:tbl1]]):
+~ATTR_LATEX~ to set the different attributes of the table (Table ref:cp1:s2:tbl1):
 
 #+ATTR_LATEX: :mode table :environment tabular :placement [!ht] :width \textwidth
 #+ATTR_LATEX: :align m{0.2\textwidth}  m {0.1\textwidth} m{0.15\textwidth} :booktabs t
@@ -305,14 +368,16 @@ generate the table depicts above.
 
 You can use ~latex~ base table definition for this purpose as it depicted above.
 
+
 *** Long Tables
 :PROPERTIES:
 :CUSTOM_ID: cp1:s3:ss1
 :END:
 
 
-A sample long table is shown in [[file:appendixB.org::*Long Tables][Appendix B]]  where we described the application of
+A sample long table is shown in ref:appendix_b  where we described the application of
 long table.
+
 
 ** Equations
 :PROPERTIES:
@@ -334,6 +399,24 @@ Here is a sample equation (Equation [[cp1:s4:eq1]]):
 #+end_export
 
 # Conclusion chapter
+** Acronyms and Glossaries
+:PROPERTIES:
+:CUSTOM_ID: cp1:s5
+:END:
+
+An abbreviation is a short form of a word or phrase that is usually made by
+deleting certain letters. In the following sentence, everything underlined is an
+abbreviation.
+
+Acronyms are usually formed using the first letter (or letters) of each word in
+a phrase. he first time you use the term, put the acronym in parentheses after
+the full term. Thereafter, you can stick to using the acronym. For example, if
+it is the first time you are introducing the [[acrshort:cpu][CPU]], you need to use it as [[Acrfull:cpu][Central
+Processing Unit (CPU)]]. You can also have glossaries as more descriptive
+acronyms. As an example I've added [[gls:dsl][DSL]] as a glossary here which is going to
+introduce the Domain Specific Languages.
+
+
 * Conclusion
 :PROPERTIES:
 :CUSTOM_ID: conclusion
@@ -341,6 +424,9 @@ Here is a sample equation (Equation [[cp1:s4:eq1]]):
 
 Every thesis also needs a concluding chapter
 
+
+
+* Appendix Started :ignore:
 #+begin_export latex
 \setcounter{figure}{0}
 \setcounter{equation}{0}
@@ -351,6 +437,8 @@ Every thesis also needs a concluding chapter
 #+BEGIN_EXPORT latex
 \begin{appendix}
 #+end_export
+
+
 * Your Appendix
 :PROPERTIES:
 :CUSTOM_ID: appendix_a
@@ -363,6 +451,7 @@ Your appendix goes here.
 \setcounter{equation}{0}
 \setcounter{table}{0}
 #+end_export
+
 * Long Tables
 :PROPERTIES:
 :CUSTOM_ID: appendix_b
@@ -482,6 +571,8 @@ A & B & C & D \\ \midrule
 \end{center} 
 #+end_src
 
+
+* Appendix Ended :ignore:
 #+begin_export latex
 \setcounter{figure}{0}
 \setcounter{equation}{0}
@@ -491,19 +582,26 @@ A & B & C & D \\ \midrule
 \end{appendix}
 #+end_export
 
-# Referencing
-# ===========================
-bibliographystyle:natbib
-bibliography:index.bib
 
-#+BEGIN_EXPORT latex
-\label{NumDocumentPages}
+* Glossary generator                                                 :ignore:
+** The following command is a latex one. Comment it if you do not have any glossary in your document :ignore:
+
+#+begin_export latex
+\printglossaries
 #+end_export
 
-* Bib :ignore:
-# LaTeX: \addcontentsline{toc}{section}{References}
-# #+LaTeX: \addcontentsline{toc}{part}{Biblioraphy}
-# #+LaTeX: \printbibliography
+* Reference Definition :ignore:
+
+# Referencing
+# ===========================
+bibliographystyle:abbrvnat
+bibliography:index.bib
+
+ #+BEGIN_EXPORT latex
+ \label{NumDocumentPages}
+ #+End_export
+
+
 * ~References~ Org-Bibtex                                            :ignore:
 ** COMMENT PUT BIBTEX ENTRIES HERE IN SUBSECTION ENDED WITH IGNORE USING ORG-BIBTEX-YANK COMMAND :ignore:
 ** COMMENT EXPORT TO index.bib USING ORG-BIBTEX COMMAND              :ignore:
@@ -533,3 +631,53 @@ bibliography:index.bib
    :PUBLISHER: Taylor and Francis
    :JOURNAL:  Applied Artifical Intelligence
    :END:
+
+
+* Export Commands                                                  :noexport:
+# PDF output
+#+begin_src emacs-lisp :results slient
+  (delete-file "index.pdf")
+  (let ((org-export-before-parsing-hook '(org-ref-glossary-before-parsing
+                                          org-ref-acronyms-before-parsing))
+         (org-laktex-pdf-process
+          '("pdflatex -interaction nonstopmode -output-directory %o %f"
+            "bibtex %b"
+            "makeglossaries %b"
+            "makeindex %b"
+            "pdflatex -interaction nonstopmode -output-directory %o %f"
+            "pdflatex -interaction nonstopmode -output-directory %o %f")))
+    (org-open-file (org-latex-export-to-pdf)))
+#+end_src
+
+#+RESULTS:
+
+# HTML
+#+begin_src emacs-lisp :results silent
+  (let ((org-export-before-parsing-hook '(org-ref-acrossproc org-ref-idxproc)))
+    (org-open-file (org-html-export-to-html)))
+#+end_src
+
+# Word (Docx)
+#+begin_src emacs-lisp :results silent
+  (require 'ox-pandoc)
+  (let ((org-export-before-parsing-hook '(org-ref-acrossproc org-ref-idxproc)))
+    (org-open-file (plist-get (org-pandoc-export-to-docx) 'output-file) 'system))
+#+end_src
+
+* Local Variables :noexport:
+# Local Variables:
+# org-latex-inputenc-alist: (("utf8" . "utf8x"))
+# eval: (add-to-list 'org-latex-classes
+#               '("mcmasterreport"
+#                 "\\documentclass[12pt]{report}"
+#                 ("\\chapter{%s}" . "\\chapter*{%s}")
+#                 ("\\section{%s}" . "\\section*{%s}")
+#                 ("\\subsection{%s}" . "\\subsection*{%s}")
+#                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+#                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+#                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+# eval: (setq org-latex-default-packages-alist nil)
+# eval: (setq org-latex-packages-alist nil)
+# eval: (setq org-latex-default-packages-alist (cons '("mathletters" "ucs" nil)
+# org-latex-default-packages-alist))
+# End:
